@@ -1,0 +1,16 @@
+{
+  "patients": [
+    { "id": 1, "first_name": "Matt", "last_name": "Graham" },
+    { "id": 2, "first_name": "Fred", "last_name": "Flinstone" },
+    { "id": 3, "first_name": "Barney", "last_name": "Rubble" }
+  ],
+  "pulse_records": [
+    { "id": 1, "pulse": "60", "patientId": 1 },
+    { "id": 2, "pulse": "65", "patientId": 1 },
+    { "id": 3, "pulse": "75", "patientId": 1 },
+    { "id": 4, "pulse": "60", "patientId": 2 },
+    { "id": 5, "pulse": "65", "patientId": 2 },
+    { "id": 6, "pulse": "90", "patientId": 3 },
+    { "id": 7, "pulse": "95", "patientId": 3 }
+  ]
+}
