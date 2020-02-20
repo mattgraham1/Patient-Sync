@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "853520627296",
+    "firebase_url": "https://patient-sync.firebaseio.com",
+    "project_id": "patient-sync",
+    "storage_bucket": "patient-sync.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:853520627296:android:508b955e68fd56548ab505",
+        "android_client_info": {
+          "package_name": "com.graham4.patientsync"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "853520627296-3u5ioi9u3kik3pu0g1tls8e6tuv2avii.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDDHVokuDI6dVxQoeE-qPBk5l6PLvx8jD8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "853520627296-3u5ioi9u3kik3pu0g1tls8e6tuv2avii.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
