@@ -1,6 +1,5 @@
 package com.graham4.patientsync.ui.main
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,7 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.graham4.patientsync.R
 import com.graham4.patientsync.repository.models.Patient
 
-class PatientListAdapter(val listener: (Patient) -> Unit) : RecyclerView.Adapter<PatientListAdapter.ViewHolder>() {
+class PatientListAdapter(val listener: (Patient, Boolean) -> Unit) : RecyclerView.Adapter<PatientListAdapter.ViewHolder>() {
     private var patientData: List<Patient> = emptyList()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -26,8 +25,8 @@ class PatientListAdapter(val listener: (Patient) -> Unit) : RecyclerView.Adapter
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.firstName.text = patientData[position].firstName
         holder.lastName.text = patientData[position].lastName
-//        holder.deleteButton.setOnClickListener { listener (patientData[position]) }
-        holder.itemView.setOnClickListener{ listener(patientData[position]) }
+        holder.deleteButton.setOnClickListener { listener (patientData[position], true) }
+        holder.itemView.setOnClickListener{ listener(patientData[position], false) }
     }
 
     fun updatePatientData(data: List<Patient>) {

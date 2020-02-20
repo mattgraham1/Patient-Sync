@@ -1,7 +1,6 @@
 package com.graham4.patientsync.ui.main
 
 import android.app.AlertDialog
-import android.content.DialogInterface
 import android.os.Bundle
 import android.text.InputType
 import android.util.Log
@@ -14,7 +13,7 @@ import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -24,7 +23,8 @@ import com.graham4.patientsync.repository.models.PulseRecord
 
 class DetailsFragment(val patient: Patient) : Fragment() {
     private lateinit var viewModel: MainViewModel
-    private var adapter = PulseListAdapter()
+    private var adapter: PulseListAdapter? =
+            PulseListAdapter{pulseRecord: PulseRecord -> deletePulseRecord(pulseRecord) }
     private lateinit var recyclerView: RecyclerView
     private lateinit var spinner: ProgressBar
 
@@ -66,11 +66,11 @@ class DetailsFragment(val patient: Patient) : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProviders.of(this).get(MainViewModel::class.java)
+        viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
 
-        viewModel.getPatientPulseRecords(patient.id).observe(viewLifecycleOwner, Observer<List<PulseRecord>> { data ->
+        viewModel.getPulseRecords().observe(viewLifecycleOwner, Observer<List<PulseRecord>> { data ->
             setSpinnerVisible(false)
-            adapter.updatePulseRecordedData(data)
+            adapter?.updatePulseRecordedData(data, patient.id)
         })
     }
 
@@ -103,5 +103,9 @@ class DetailsFragment(val patient: Patient) : Fragment() {
         builder.setView(addPulseEditText)
 
         builder.show()
+    }
+
+    private fun deletePulseRecord(pulseRecord: PulseRecord) {
+        viewModel.deletePulseRecord(pulseRecord)
     }
 }

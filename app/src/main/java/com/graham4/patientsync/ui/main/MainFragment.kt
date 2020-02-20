@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -24,7 +25,7 @@ class MainFragment : Fragment() {
     private lateinit var viewModel: MainViewModel
     private var layoutManager: RecyclerView.LayoutManager? = null
     private var adapter: PatientListAdapter? =
-        PatientListAdapter { patient: Patient -> showPatientDetails(patient) }
+        PatientListAdapter { patient: Patient, delPatient: Boolean -> handlePatientListClicked(patient, delPatient) }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -48,7 +49,7 @@ class MainFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProviders.of(this).get(MainViewModel::class.java)
+        viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
 
         viewModel.getPatients().observe(viewLifecycleOwner, Observer<List<Patient>> { data ->
             // TODO: Need to figure out how to get the most recent pulse record for a patient
@@ -67,6 +68,14 @@ class MainFragment : Fragment() {
             .commit()
     }
 
+    private fun handlePatientListClicked(patient: Patient, delPatient: Boolean) {
+        if (delPatient) {
+            deletePatient(patient)
+        } else {
+            showPatientDetails(patient)
+        }
+    }
+
     /**
      * Method to show the add patient screen.
      */
@@ -80,8 +89,8 @@ class MainFragment : Fragment() {
     /**
      * Method to delete a patient
      */
-    fun deletePatientClicked(patient: Patient) {
+    fun deletePatient(patient: Patient) {
         Log.d("MainFrag", "delete patient...")
-        viewModel?.deletePatient(patient)
+        viewModel.deletePatient(patient)
     }
 }
