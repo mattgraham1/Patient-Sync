@@ -7,7 +7,7 @@ import com.graham4.patientsync.repository.models.Patient
 import com.graham4.patientsync.repository.models.PulseRecord
 
 object DataRepository {
-    private val TAG = "TypicodeRepo"
+    private const val TAG = "DataRepository"
 
     var patientsListFromDb = MutableLiveData<List<Patient>>()
 
@@ -34,7 +34,7 @@ object DataRepository {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 val patientDbList: MutableList<Patient> = mutableListOf()
                 dataSnapshot.children.forEach {
-                    var user = it.getValue(Patient::class.java)
+                    val user = it.getValue(Patient::class.java)
                     user?.key = it.key.toString()
                     if (user != null) {
                         patientDbList.add(user)
@@ -60,7 +60,7 @@ object DataRepository {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 allPulseRecordsFromDb.clear()
                 dataSnapshot.children.forEach {
-                    var pulseRecord = it.getValue(PulseRecord::class.java)
+                    val pulseRecord = it.getValue(PulseRecord::class.java)
                     pulseRecord?.key = it.key.toString()
                     if (pulseRecord != null) {
                         allPulseRecordsFromDb.add(pulseRecord)

@@ -15,7 +15,7 @@
         android:layout_marginStart="177dp"
         android:layout_marginTop="19dp"
         android:layout_marginEnd="176dp"
-        android:text="Patient Details"
+        android:text="@string/patient_details"
         android:textSize="24sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
@@ -28,7 +28,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="24dp"
-        android:text="First Name:"
+        android:text="@string/first_name"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView_title" />
 
@@ -40,7 +40,7 @@
         android:layout_marginTop="24dp"
         android:layout_marginEnd="16dp"
         android:gravity="start"
-        android:text="first name"
+        android:text=""
         android:textAlignment="viewStart"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/textView_firstname_title"
@@ -51,7 +51,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="13dp"
-        android:text="Last Name:"
+        android:text="@string/last_name"
         app:layout_constraintStart_toStartOf="@+id/textView_firstname_title"
         app:layout_constraintTop_toBottomOf="@+id/textView_firstname_title" />
 
@@ -62,7 +62,7 @@
         android:layout_marginTop="12dp"
         android:layout_marginEnd="16dp"
         android:gravity="start"
-        android:text="last name"
+        android:text=""
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/textView_firstname"
         app:layout_constraintTop_toBottomOf="@+id/textView_firstname" />
@@ -72,7 +72,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="36dp"
-        android:text="Pulse History"
+        android:text="@string/pulse_history"
         android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -110,7 +110,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="16dp"
-        android:text="Add Current Pulse"
+        android:text="@string/add_current_pulse"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />

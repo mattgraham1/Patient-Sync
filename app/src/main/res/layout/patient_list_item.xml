@@ -10,7 +10,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:paddingTop="8dp"
-        android:text="First Name:"/>
+        android:text="@string/first_name"/>
 
     <TextView
         android:id="@+id/textView_firstname"
@@ -19,7 +19,7 @@
         android:layout_toRightOf="@+id/textView_firstname_title"
         android:paddingLeft="8dp"
         android:paddingTop="8dp"
-        android:text="first name" />
+        android:text="" />
 
     <TextView
         android:id="@+id/textView_lastname_title"
@@ -27,7 +27,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/textView_firstname_title"
         android:paddingTop="8dp"
-        android:text="Last Name:"/>
+        android:text="@string/last_name"/>
 
     <TextView
         android:id="@+id/textView_lastname"
@@ -37,7 +37,7 @@
         android:layout_below="@+id/textView_firstname"
         android:paddingLeft="8dp"
         android:paddingTop="8dp"
-        android:text="last name" />
+        android:text="" />
 
     <TextView
         android:id="@+id/textView_pulse_title"
@@ -45,7 +45,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/textView_lastname_title"
         android:paddingTop="8dp"
-        android:text="Recent Pulse:"/>
+        android:text="@string/recent_pulse"/>
 
     <TextView
         android:id="@+id/textView_pulse"

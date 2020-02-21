@@ -94,7 +94,7 @@ class MainFragment : Fragment() {
     /**
      * Function to delete a patient.
      */
-    fun deletePatient(patient: Patient) {
+    private fun deletePatient(patient: Patient) {
         Log.d("MainFrag", "delete patient...")
         viewModel.deletePatient(patient)
     }
