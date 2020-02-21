@@ -30,11 +30,17 @@ class PulseListAdapter(val listener: (PulseRecord) -> Unit) : RecyclerView.Adapt
         holder.deleteButton.setOnClickListener { listener (pulseData[position]) }
     }
 
+    /**
+     * Function to update adapter data.
+     */
     fun updatePulseRecordedData(data: List<PulseRecord>, patientId: String) {
         pulseData = filterPulseRecordsByPatient(data, patientId)
         notifyDataSetChanged()
     }
 
+    /**
+     * Function to filter pulse records per patient.
+     */
     private fun filterPulseRecordsByPatient(data: List<PulseRecord>, patientId: String): List<PulseRecord> {
         val filteredPulseRecord = mutableListOf<PulseRecord>()
 

@@ -2,16 +2,12 @@ package com.graham4.patientsync
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import com.google.firebase.database.FirebaseDatabase
 import com.graham4.patientsync.ui.main.MainFragment
 
 class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        //Persist data offline
-        FirebaseDatabase.getInstance().setPersistenceEnabled(true)
 
         setContentView(R.layout.main_activity)
         if (savedInstanceState == null) {
@@ -22,6 +18,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onBackPressed() {
+        // Handled fragments when selecting back button
         val count = supportFragmentManager.backStackEntryCount
         if (count == 0) {
             super.onBackPressed()

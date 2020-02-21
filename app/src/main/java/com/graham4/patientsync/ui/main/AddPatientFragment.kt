@@ -1,12 +1,12 @@
 package com.graham4.patientsync.ui.main
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.graham4.patientsync.R
@@ -32,8 +32,16 @@ class AddPatientFragment : Fragment() {
 
         val submit = view.findViewById(R.id.button_submit) as Button
         submit.setOnClickListener {
-            //TODO: validate fields before submitting, maybe show a toast or something
-            addNewPatient(firstNameEdit.text.toString(), lastNameEdit.text.toString(), pulseEdit.text.toString())
+            if(firstNameEdit.text.isEmpty() || lastNameEdit.text.isEmpty()) {
+                Toast.makeText(activity, "Invalid First or Last name entered, Please fill in appropriately.", Toast.LENGTH_LONG).show()
+            } else {
+                addNewPatient(
+                    firstNameEdit.text.toString(),
+                    lastNameEdit.text.toString(),
+                    pulseEdit.text.toString()
+                )
+                Toast.makeText(activity, "Patient Added!", Toast.LENGTH_LONG).show()
+            }
             activity?.supportFragmentManager?.popBackStack()
         }
 
@@ -45,9 +53,10 @@ class AddPatientFragment : Fragment() {
         viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
     }
 
+    /**
+     * Function to add new patient.
+     */
     private fun addNewPatient(firstName: String, lastName: String, pulse: String) {
-        Log.d("AddPatientFrag", "Submit button clicked, first name: " + firstName
-                + ", last name: " + lastName + ", pulse: " + pulse)
         viewModel.addNewPatient(firstName,lastName, pulse)
     }
 }

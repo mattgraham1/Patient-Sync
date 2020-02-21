@@ -1,13 +1,12 @@
 package com.graham4.patientsync.ui.main
 
-import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DividerItemDecoration
@@ -15,6 +14,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.graham4.patientsync.R
 import com.graham4.patientsync.repository.models.Patient
+import com.graham4.patientsync.repository.models.PulseRecord
 
 class MainFragment : Fragment() {
 
@@ -52,14 +52,16 @@ class MainFragment : Fragment() {
         viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
 
         viewModel.getPatients().observe(viewLifecycleOwner, Observer<List<Patient>> { data ->
-            // TODO: Need to figure out how to get the most recent pulse record for a patient
-            // then add it into each row into the adapter.
             adapter?.updatePatientData(data)
+        })
+
+        viewModel.getPulseRecords().observe(viewLifecycleOwner, Observer<List<PulseRecord>> { data ->
+            adapter?.updatePulseRecordData(data)
         })
     }
 
     /**
-     * Method to show the patient details screen
+     * Function to show the patient details screen
      */
     private fun showPatientDetails(patient: Patient) {
         parentFragmentManager.beginTransaction()
@@ -68,6 +70,9 @@ class MainFragment : Fragment() {
             .commit()
     }
 
+    /**
+     * Function to handle know if the user clicked the list item or delete button.
+     */
     private fun handlePatientListClicked(patient: Patient, delPatient: Boolean) {
         if (delPatient) {
             deletePatient(patient)
@@ -77,7 +82,7 @@ class MainFragment : Fragment() {
     }
 
     /**
-     * Method to show the add patient screen.
+     * Function to show the add patient screen.
      */
     private fun showAddPatient() {
         parentFragmentManager.beginTransaction()
@@ -87,7 +92,7 @@ class MainFragment : Fragment() {
     }
 
     /**
-     * Method to delete a patient
+     * Function to delete a patient.
      */
     fun deletePatient(patient: Patient) {
         Log.d("MainFrag", "delete patient...")

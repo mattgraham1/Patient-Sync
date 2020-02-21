@@ -21,16 +21,19 @@ import com.graham4.patientsync.R
 import com.graham4.patientsync.repository.models.Patient
 import com.graham4.patientsync.repository.models.PulseRecord
 
-class DetailsFragment(val patient: Patient) : Fragment() {
+class DetailsFragment constructor(var patient: Patient) : Fragment() {
+
     private lateinit var viewModel: MainViewModel
     private var adapter: PulseListAdapter? =
-            PulseListAdapter{pulseRecord: PulseRecord -> deletePulseRecord(pulseRecord) }
+            PulseListAdapter{ pulseRecord: PulseRecord -> deletePulseRecord(pulseRecord) }
     private lateinit var recyclerView: RecyclerView
     private lateinit var spinner: ProgressBar
 
     companion object {
         fun newInstance(patient: Patient) = DetailsFragment(patient)
     }
+
+    constructor() : this(Patient())
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -68,12 +71,18 @@ class DetailsFragment(val patient: Patient) : Fragment() {
         super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
 
+        // Added to ensure data is retained during screen rotate
+        retainInstance = true
+
         viewModel.getPulseRecords().observe(viewLifecycleOwner, Observer<List<PulseRecord>> { data ->
             setSpinnerVisible(false)
-            adapter?.updatePulseRecordedData(data, patient.id)
+            adapter?.updatePulseRecordedData(data, patient.key)
         })
     }
 
+    /**
+     * Function to show or hide spinner.
+     */
     private fun setSpinnerVisible(visible: Boolean) {
         if (visible) {
             spinner.visibility = View.VISIBLE
@@ -84,6 +93,9 @@ class DetailsFragment(val patient: Patient) : Fragment() {
         }
     }
 
+    /**
+     * Function to add current pulse to patient.
+     */
     private fun addCurrentPulse() {
         val addPulseEditText = EditText(activity)
 
@@ -95,7 +107,7 @@ class DetailsFragment(val patient: Patient) : Fragment() {
         }
         builder.setPositiveButton("Submit") {dialog, which ->
             Log.d("DetailsFrag", "addCurrentPulse() submit button clicked, pulse entered: " + addPulseEditText.text)
-            viewModel.addPatientPulse(addPulseEditText.text.toString(), patient.id)
+            viewModel.addPatientPulse(addPulseEditText.text.toString(), patient)
         }
 
         addPulseEditText.hint = "Enter Current Pulse"
@@ -105,6 +117,9 @@ class DetailsFragment(val patient: Patient) : Fragment() {
         builder.show()
     }
 
+    /**
+     * Function to delete pulse record
+     */
     private fun deletePulseRecord(pulseRecord: PulseRecord) {
         viewModel.deletePulseRecord(pulseRecord)
     }

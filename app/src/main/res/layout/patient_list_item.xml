@@ -55,7 +55,7 @@
         android:layout_below="@+id/textView_lastname"
         android:paddingLeft="8dp"
         android:paddingTop="8dp"
-        android:text="65" />
+        android:text="" />
 
     <ImageButton
         android:id="@+id/button_delete"
