@@ -10,7 +10,6 @@ object DataRepository {
     private const val TAG = "DataRepository"
 
     var patientsListFromDb = MutableLiveData<List<Patient>>()
-
     var mutablePatientPulseRecords = MutableLiveData<List<PulseRecord>>()
     var allPulseRecordsFromDb = mutableListOf<PulseRecord>()
 
@@ -32,16 +31,14 @@ object DataRepository {
     private fun addPatientDbListener() {
         val patientDbListener = object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
-                val patientDbList: MutableList<Patient> = mutableListOf()
-                dataSnapshot.children.forEach {
-                    val user = it.getValue(Patient::class.java)
-                    user?.key = it.key.toString()
-                    if (user != null) {
-                        patientDbList.add(user)
+                patientsListFromDb.value = dataSnapshot.children.map { dataSnapshot ->
+                    dataSnapshot.getValue(Patient::class.java)?.let { user ->
+                        user.key = dataSnapshot.key.toString()
+                        user
                     }
+                }.filterNotNull().map {
+                    it
                 }
-
-                patientsListFromDb.value = patientDbList
             }
 
             override fun onCancelled(databaseError: DatabaseError) {

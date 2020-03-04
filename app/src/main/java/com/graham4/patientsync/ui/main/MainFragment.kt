@@ -16,15 +16,15 @@ import com.graham4.patientsync.R
 import com.graham4.patientsync.repository.models.Patient
 import com.graham4.patientsync.repository.models.PulseRecord
 
-class MainFragment : Fragment() {
+class MainFragment private constructor(myString: String, myInt: Int) : Fragment() {
 
     companion object {
-        fun newInstance() = MainFragment()
+        fun newInstance() = MainFragment("Hello World", 1)
     }
 
     private lateinit var viewModel: MainViewModel
     private var layoutManager: RecyclerView.LayoutManager? = null
-    private var adapter: PatientListAdapter? =
+    private val adapter: PatientListAdapter =
         PatientListAdapter { patient: Patient, delPatient: Boolean -> handlePatientListClicked(patient, delPatient) }
 
     override fun onCreateView(
@@ -49,14 +49,14 @@ class MainFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
+        viewModel = ViewModelProvider(requireActivity()).get(MainViewModel::class.java)
 
         viewModel.getPatients().observe(viewLifecycleOwner, Observer<List<Patient>> { data ->
-            adapter?.updatePatientData(data)
+            adapter.updatePatientData(data)
         })
 
         viewModel.getPulseRecords().observe(viewLifecycleOwner, Observer<List<PulseRecord>> { data ->
-            adapter?.updatePulseRecordData(data)
+            adapter.updatePulseRecordData(data)
         })
     }
 

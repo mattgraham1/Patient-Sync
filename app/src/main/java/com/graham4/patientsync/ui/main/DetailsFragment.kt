@@ -24,7 +24,7 @@ import com.graham4.patientsync.repository.models.PulseRecord
 class DetailsFragment constructor(var patient: Patient) : Fragment() {
 
     private lateinit var viewModel: MainViewModel
-    private var adapter: PulseListAdapter? =
+    private var adapter: PulseListAdapter =
             PulseListAdapter{ pulseRecord: PulseRecord -> deletePulseRecord(pulseRecord) }
     private lateinit var recyclerView: RecyclerView
     private lateinit var spinner: ProgressBar
@@ -69,14 +69,14 @@ class DetailsFragment constructor(var patient: Patient) : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
+        viewModel = ViewModelProvider(requireActivity()).get(MainViewModel::class.java)
 
         // Added to ensure data is retained during screen rotate
         retainInstance = true
 
         viewModel.getPulseRecords().observe(viewLifecycleOwner, Observer<List<PulseRecord>> { data ->
             setSpinnerVisible(false)
-            adapter?.updatePulseRecordedData(data, patient.key)
+            adapter.updatePulseRecordedData(data, patient.key)
         })
     }
 

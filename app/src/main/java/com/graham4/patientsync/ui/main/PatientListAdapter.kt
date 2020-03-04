@@ -5,6 +5,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageButton
 import android.widget.TextView
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.graham4.patientsync.R
 import com.graham4.patientsync.repository.models.Patient
@@ -12,7 +13,7 @@ import com.graham4.patientsync.repository.models.PulseRecord
 
 class PatientListAdapter(val listener: (Patient, Boolean) -> Unit) : RecyclerView.Adapter<PatientListAdapter.ViewHolder>() {
     private val TAG = "PatientListAdapter"
-    private var patientData: List<Patient> = emptyList()
+    private val patientData: MutableList<Patient> = mutableListOf()
     private var pulseRecordData: List<PulseRecord> = emptyList()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -44,7 +45,8 @@ class PatientListAdapter(val listener: (Patient, Boolean) -> Unit) : RecyclerVie
      * Function to update adapter patient data.
      */
     fun updatePatientData(data: List<Patient>) {
-        patientData = data
+        patientData.clear()
+        patientData.addAll(data)
         notifyDataSetChanged()
     }
 
@@ -62,4 +64,15 @@ class PatientListAdapter(val listener: (Patient, Boolean) -> Unit) : RecyclerVie
         var deleteButton: ImageButton = itemView.findViewById(R.id.button_delete)
         var recentPulse: TextView = itemView.findViewById(R.id.textView_pulse)
     }
+
+    // TODO: Update to handle only swapping out items in the adapter that has truly changed.
+    /*object diffUpdate : DiffUtil.ItemCallback<Patient> {
+        override fun areContentsTheSame(oldItem: Patient, newItem: Patient): Boolean {
+            TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        }
+
+        override fun areItemsTheSame(oldItem: Patient, newItem: Patient): Boolean {
+            TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        }
+    }*/
 }
