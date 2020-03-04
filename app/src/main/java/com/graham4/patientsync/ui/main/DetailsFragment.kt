@@ -18,22 +18,19 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.graham4.patientsync.R
-import com.graham4.patientsync.repository.models.Patient
 import com.graham4.patientsync.repository.models.PulseRecord
 
-class DetailsFragment constructor(var patient: Patient) : Fragment() {
+class DetailsFragment : Fragment() {
 
-    private lateinit var viewModel: MainViewModel
+    private val viewModel: MainViewModel by lazy { ViewModelProvider(requireActivity()).get(MainViewModel::class.java) }
     private var adapter: PulseListAdapter =
             PulseListAdapter{ pulseRecord: PulseRecord -> deletePulseRecord(pulseRecord) }
     private lateinit var recyclerView: RecyclerView
     private lateinit var spinner: ProgressBar
 
     companion object {
-        fun newInstance(patient: Patient) = DetailsFragment(patient)
+        fun newInstance() = DetailsFragment()
     }
-
-    constructor() : this(Patient())
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -43,9 +40,9 @@ class DetailsFragment constructor(var patient: Patient) : Fragment() {
         val view = inflater.inflate(R.layout.details_fragment, container, false)
 
         val firstName: TextView = view.findViewById(R.id.textView_firstname) as TextView
-        firstName.text = patient.firstName
+        firstName.text = viewModel.currentPatient.firstName
         val lastName: TextView = view.findViewById(R.id.textView_lastname) as TextView
-        lastName.text = patient.lastName
+        lastName.text = viewModel.currentPatient.lastName
 
         val addPulseButton = view.findViewById(R.id.button_add_pulse) as Button
         addPulseButton.setOnClickListener {
@@ -69,14 +66,12 @@ class DetailsFragment constructor(var patient: Patient) : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProvider(requireActivity()).get(MainViewModel::class.java)
-
         // Added to ensure data is retained during screen rotate
         retainInstance = true
 
         viewModel.getPulseRecords().observe(viewLifecycleOwner, Observer<List<PulseRecord>> { data ->
             setSpinnerVisible(false)
-            adapter.updatePulseRecordedData(data, patient.key)
+            adapter.updatePulseRecordedData(data, viewModel.currentPatient.key)
         })
     }
 
@@ -107,7 +102,7 @@ class DetailsFragment constructor(var patient: Patient) : Fragment() {
         }
         builder.setPositiveButton("Submit") {dialog, which ->
             Log.d("DetailsFrag", "addCurrentPulse() submit button clicked, pulse entered: " + addPulseEditText.text)
-            viewModel.addPatientPulse(addPulseEditText.text.toString(), patient)
+            viewModel.addPatientPulse(addPulseEditText.text.toString(), viewModel.currentPatient)
         }
 
         addPulseEditText.hint = "Enter Current Pulse"

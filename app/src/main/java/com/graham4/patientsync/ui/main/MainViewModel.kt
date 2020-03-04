@@ -7,6 +7,8 @@ import com.graham4.patientsync.repository.models.Patient
 import com.graham4.patientsync.repository.models.PulseRecord
 
 class MainViewModel : ViewModel() {
+    var currentPatient: Patient = Patient()
+
     fun getPatients(): MutableLiveData<List<Patient>> {
         return DataRepository.patientsListFromDb
     }

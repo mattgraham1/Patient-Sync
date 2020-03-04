@@ -63,10 +63,10 @@ class MainFragment private constructor(myString: String, myInt: Int) : Fragment(
     /**
      * Function to show the patient details screen
      */
-    private fun showPatientDetails(patient: Patient) {
+    private fun showPatientDetails() {
         parentFragmentManager.beginTransaction()
             .addToBackStack("DetailsFragment")
-            .replace(R.id.container, DetailsFragment.newInstance(patient))
+            .replace(R.id.container, DetailsFragment.newInstance())
             .commit()
     }
 
@@ -77,7 +77,8 @@ class MainFragment private constructor(myString: String, myInt: Int) : Fragment(
         if (delPatient) {
             deletePatient(patient)
         } else {
-            showPatientDetails(patient)
+            viewModel.currentPatient = patient
+            showPatientDetails()
         }
     }
 
